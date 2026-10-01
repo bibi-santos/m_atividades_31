@@ -1,0 +1,79 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`loja_jogos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`loja_jogos` (
+)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
+  `id_cliente` INT NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `telefone` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_cliente`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`jogos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`jogos` (
+  `id_jogos` INT NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
+  `genero` VARCHAR(45) NOT NULL,
+  `preco` DECIMAL NOT NULL,
+  PRIMARY KEY (`id_jogos`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`venda`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`venda` (
+  `id_venda` INT NOT NULL,
+  `id_cliente` INT NOT NULL,
+  `id_jogo` INT NOT NULL,
+  `data_venda` DATE NOT NULL,
+  `quantidade` INT NOT NULL,
+  `valor_total` DECIMAL NOT NULL,
+  `cliente_id_cliente` INT NOT NULL,
+  `jogos_id_jogos` INT NOT NULL,
+  PRIMARY KEY (`id_venda`),
+  INDEX `fk_venda_cliente_idx` (`cliente_id_cliente` ASC) VISIBLE,
+  INDEX `fk_venda_jogos1_idx` (`jogos_id_jogos` ASC) VISIBLE,
+  CONSTRAINT `fk_venda_cliente`
+    FOREIGN KEY (`cliente_id_cliente`)
+    REFERENCES `mydb`.`cliente` (`id_cliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_venda_jogos1`
+    FOREIGN KEY (`jogos_id_jogos`)
+    REFERENCES `mydb`.`jogos` (`id_jogos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
